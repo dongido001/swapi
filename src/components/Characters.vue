@@ -100,7 +100,7 @@ export default {
         }
     },
     created() {
-        axios.get('/people/')
+        axios.get(`${process.env.VUE_APP_API_URL}/people/`)
             .then(response => {
                 const { count, next, results } = response.data
 
@@ -110,7 +110,7 @@ export default {
     },
     mounted(){
         EventBus.$on('searchItem', (search) => {
-            axios.get(`/people/?search=${search}`)
+            axios.get(`${process.env.VUE_APP_API_URL}/people/?search=${search}`)
                 .then(response => {
                     const { count, next, results } = response.data
 

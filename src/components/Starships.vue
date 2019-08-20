@@ -82,7 +82,7 @@ export default {
         }
     },
     created() {
-        axios.get('/starships/')
+        axios.get(`${process.env.VUE_APP_API_URL}/starships/`)
             .then(response => {
                 const { count, next, results } = response.data
 
@@ -91,7 +91,7 @@ export default {
             })
         
         EventBus.$on('searchItem', (search) => {
-            axios.get(`/starships/?search=${search}`)
+            axios.get(`${process.env.VUE_APP_API_URL}/starships/?search=${search}`)
                 .then(response => {
                     const { count, next, results } = response.data
 
