@@ -1,5 +1,7 @@
 # swapi
 
+URL: https://flamboyant-tereshkova-3bfae4.netlify.com/#/
+
 ## Project setup
 ```
 yarn install
