@@ -1,29 +1,34 @@
 <template>
     <section class="planets"> 
         <h2 class="heading"> Popular Planets </h2>
-
-        <div>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-                <b-row no-gutters>
-                <b-col md="6">
-                    <b-card-img src="https://picsum.photos/400/400/?image=20" class="rounded-0"></b-card-img>
-                </b-col>
-                <b-col md="6">
-                    <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                        This is a wider card with supporting text as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                    </b-card-text>
-                    </b-card-body>
-                </b-col>
-                </b-row>
-            </b-card>
-        </div>
+        <b-container>
+            <b-row>
+                <div class="col-md-8 mx-auto">
+                    <carousel class="text-center">
+                        <slide v-for="(planet, id) in planets" :Key="id">
+                            <b-card
+                                border-variant="secondary"
+                                :header="planet.name"
+                                header-border-variant="secondary"
+                                align="center"
+                                style="margin: 9px"
+                            >
+                                <b-card-text>
+                                    <div> <b>Temperature:</b>  {{planet.name}} </div>
+                                    <div> <b>Population:</b> {{planet.population}} </div>
+                                </b-card-text>
+                            </b-card>
+                        </slide>
+                    </carousel>
+                </div>
+            </b-row>
+        </b-container>
     </section> 
 </template>
 
 <script>
 import axios from 'axios'
+import EventBus from '../EventBus'
 
 export default {
     name: "planets",
@@ -33,13 +38,33 @@ export default {
         }
     },
     created() {
-        axios.get('/planets')
+        axios.get('/planets/')
             .then(response => {
                 const { results } = response.data
 
                 this.planets = results || []
             })
-    }
+
+        EventBus.$on('searchItem', (search) => {
+            axios.get(`/planets/?search=${search}`)
+                .then(response => {
+                    const { count, next, results } = response.data
+
+                    this.planets = results
+                    this.next_page = next
+                    this.loading = false
+                })
+        })
+    },
+    props: {
+        // used to know if to redirect to a new page 
+        // or load more of the content
+        loadMoreContent: { 
+            type: Boolean,
+            required: false,
+            default: false
+        }
+    },
 }
 </script>
 

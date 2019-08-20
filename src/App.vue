@@ -1,14 +1,15 @@
 <template>
   <b-container id="app" fluid>
       <header class="header">
-        <img src="./assets/logo.png" width="85" height="25">
+        <router-link to="/">
+          <img src="./assets/logo.png" width="85" height="25">
+        </router-link>
+        
         <SearchForm/>
       </header>
 
       <main>
-        <Starships/>
-        <Planets/>
-        <Characters/>
+        <router-view></router-view>
       </main>
   </b-container>
 </template>
