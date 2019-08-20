@@ -32,7 +32,7 @@
                 <b-col v-for="(starship, id) in starships" :key="id" md="4" sm="12" class="row-gap">
                     <b-card
                         :title="starship.name"
-                        img-src="https://picsum.photos/600/300/?image=25"
+                        :img-src="img_url + `starship-${getImageN(1,6)}.jpg?raw=true`"
                         img-alt="Image"
                         img-top
                         tag="article"
@@ -78,6 +78,7 @@ export default {
             starships: [],
             loading: false,
             currentStarship: {},
+            img_url: "https://github.com/random-guys/swapi-frontend-developer-test/blob/master/assets/"
         }
     },
     created() {
@@ -121,6 +122,9 @@ export default {
                         this.loading = false
                     })
             }
+        },
+        getImageN(min, max) {
+            return Math.ceil(Math.random() * (max - min) + min);
         }
     },
     props: {

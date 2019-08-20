@@ -46,7 +46,10 @@
                     <b-card no-body class="overflow-hidden" style="max-width: 540px;">
                         <b-row no-gutters>
                             <b-col md="6">
-                                <b-card-img src="https://picsum.photos/400/400/?image=20" class="rounded-0"></b-card-img>
+                                <b-card-img 
+                                    :src="img_url + `character-${getImageN(1,4)}.jpg?raw=true`"
+                                    class="rounded-0">
+                                </b-card-img>
                             </b-col>
                             <b-col md="6">
                                 <b-card-body :title="character.name">
@@ -92,7 +95,8 @@ export default {
             characters: [],
             loading: false,
             currentCharacter: {},
-            selected: null
+            selected: null,
+            img_url: "https://github.com/random-guys/swapi-frontend-developer-test/blob/master/assets/"
         }
     },
     created() {
@@ -154,6 +158,9 @@ export default {
                         this.loading = false
                     })
             }
+        },
+        getImageN(min, max) {
+            return Math.ceil(Math.random() * (max - min) + min);
         }
     },
     props: {
